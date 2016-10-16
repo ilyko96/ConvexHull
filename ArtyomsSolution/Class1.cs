@@ -96,6 +96,7 @@ namespace ArtyomsSolution
             S2 = (float)Math.Sqrt(p2 * (p2 - l3) * (p2 - l2) * (p2 - r));
             S3 = (float)Math.Sqrt(p3 * (p3 - l1) * (p3 - l3) * (p3 - r));
             S = (float)Math.Sqrt(p * (p - r) * (p - r) * (p - r));
+
             if (S == S1 + S2 + S3)
                 return true;
             return false;
