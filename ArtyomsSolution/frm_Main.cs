@@ -14,7 +14,6 @@ namespace ArtyomsSolution
     public partial class frm_Main : Form
     {
         List<Vertex> vs = new List<Vertex>();
-        int vs_ind = -1;
 
         public frm_Main()
         {
@@ -38,44 +37,50 @@ namespace ArtyomsSolution
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            vs_ind = -1;
+            foreach (Vertex v in vs)
+                v.IsMoving = false;
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                foreach (Vertex v in vs)
-                    if (v.Check(e.X, e.Y))
+                int len = vs.Count;
+                for (int i = 0; i < len; i++)
+                    if (vs[i].Check(e.X, e.Y))
                     {
-                        vs.Remove(v);
-                        break;
+                        vs.RemoveAt(i--);
+                        len--;
                     }
             }
 
             if (e.Button == MouseButtons.Left)
             {
+                bool flag = false;
                 foreach (Vertex v in vs)
+                {
                     if (v.Check(e.X, e.Y))
                     {
-                        vs_ind = vs.IndexOf(v);
-                        break;
+                        v.IsMoving = true;
+                        v.DeltaMouse = new Point(e.X - v.SETX, e.Y - v.SETY);
+                        flag = true;
                     }
-                if (vs_ind == -1)
+                }
+                if (!flag)
                 {
                     switch (toolStripComboBox1.SelectedIndex)
                     {
                         case 0:
                             vs.Add(new Circle(e.X, e.Y));
-                            vs_ind = vs.Count - 1;
+                            vs[vs.Count - 1].IsMoving = true;
                             break;
                         case 1:
                             vs.Add(new Square(e.X, e.Y));
-                            vs_ind = vs.Count - 1;
+                            vs[vs.Count - 1].IsMoving = true;
                             break;
                         case 2:
                             vs.Add(new Triangle(e.X, e.Y));
-                            vs_ind = vs.Count - 1;
+                            vs[vs.Count - 1].IsMoving = true;
                             break;
                     }
                 }
@@ -87,12 +92,13 @@ namespace ArtyomsSolution
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (vs_ind > -1)
-                {
-                    vs[vs_ind].SETX = e.X;
-                    vs[vs_ind].SETY = e.Y;
-                    Invalidate();
-                }
+                foreach (Vertex v in vs)
+                    if (v.IsMoving)
+                    {
+                        v.SETX = e.X - v.DeltaMouse.X;
+                        v.SETY = e.Y - v.DeltaMouse.Y;
+                    }
+                Invalidate();
             }
         }
 

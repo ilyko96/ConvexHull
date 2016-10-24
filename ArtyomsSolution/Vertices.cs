@@ -45,6 +45,9 @@ namespace ArtyomsSolution
         public int SETX { get { return x0; } set { x0 = value; } }
         public int SETY { get { return y0; } set { y0 = value; } }
 
+        public bool IsMoving { get; set; }
+        public Point DeltaMouse { get; set; }
+
         public Vertex()
         { x0 = y0 = 100; }
 
@@ -52,6 +55,8 @@ namespace ArtyomsSolution
         {
             this.x0 = x;
             this.y0 = y;
+            IsMoving = false;
+            DeltaMouse = new Point();
         }
 
         static Vertex()
