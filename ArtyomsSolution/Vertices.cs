@@ -38,30 +38,29 @@ namespace ArtyomsSolution
     }
     public abstract class Vertex
     {
-        static protected Color col = Color.Aqua;
-        static protected int r = 50;
-        protected int x0;
-        protected int y0;
-        public int SETX { get { return x0; } set { x0 = value; } }
-        public int SETY { get { return y0; } set { y0 = value; } }
+        static protected Color col;
+        static protected int r;
+        public int X { get; set; }
+        public int Y { get; set; }
+        public Point Location { get { return new Point(X, Y); } set { X = value.X; Y = value.Y; } }
 
         public bool IsMoving { get; set; }
         public Point DeltaMouse { get; set; }
 
         public Vertex()
-        { x0 = y0 = 100; }
+        { X = Y = 100; }
 
         public Vertex(int x, int y)
         {
-            this.x0 = x;
-            this.y0 = y;
+            X = x;
+            Y = y;
             IsMoving = false;
             DeltaMouse = new Point();
         }
 
         static Vertex()
         {
-            r = 50;
+            r = 35;
             col = Color.Aqua;
         }
 
@@ -74,12 +73,12 @@ namespace ArtyomsSolution
         public Circle(int x, int y) : base(x, y) { }
         public override void DrawFigure(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(col), x0 - r / 2, y0 - r / 2, r, r);
+            g.FillEllipse(new SolidBrush(col), X - r / 2, Y - r / 2, r, r);
         }
 
         override public bool Check(int x, int y)
         {
-            if (Math.Sqrt((Math.Pow(x - x0, 2)) + (Math.Pow(y - y0, 2))) <= r / 2)
+            if (Math.Sqrt((Math.Pow(x - X, 2)) + (Math.Pow(y - Y, 2))) <= r / 2)
                 return true;
             return false;
         }
@@ -90,12 +89,12 @@ namespace ArtyomsSolution
         public Square(int x, int y) : base(x, y) { }
         public override void DrawFigure(Graphics g)
         {
-            g.FillRectangle(new SolidBrush(col), x0 - r / 2, y0 - r / 2, r, r);
+            g.FillRectangle(new SolidBrush(col), X - r / 2, Y - r / 2, r, r);
         }
 
         override public bool Check(int x, int y)
         {
-            if (Math.Abs(x - x0) <= r / 2 && (Math.Abs(y - y0) <= r / 2))
+            if (Math.Abs(x - X) <= r / 2 && (Math.Abs(y - Y) <= r / 2))
                 return true;
             return false;
         }
@@ -103,9 +102,9 @@ namespace ArtyomsSolution
 
     public class Triangle : Vertex
     {
-        private Point P1 { get { return new Point(x0, (int)(y0 - (float)Math.Sqrt(3) * r / 3)); } }
-        private Point P2 { get { return new Point(x0 - r / 2, (int)(y0 + (float)Math.Sqrt(3) * r / 6)); } }
-        private Point P3 { get { return new Point(x0 + r / 2, (int)(y0 + (float)Math.Sqrt(3) * r / 6)); } }
+        private Point P1 { get { return new Point(X, (int)(Y - (float)Math.Sqrt(3) * r / 3)); } }
+        private Point P2 { get { return new Point(X - r / 2, (int)(Y + (float)Math.Sqrt(3) * r / 6)); } }
+        private Point P3 { get { return new Point(X + r / 2, (int)(Y + (float)Math.Sqrt(3) * r / 6)); } }
 
         public Triangle(int x, int y) : base(x, y) { }
         public override void DrawFigure(Graphics g)

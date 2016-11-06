@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Line.cs" />
     <Compile Include="Vertices.cs" />
     <Compile Include="frm_Main.cs">
       <SubType>Form</SubType>

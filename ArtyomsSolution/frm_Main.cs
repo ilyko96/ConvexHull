@@ -14,6 +14,7 @@ namespace ArtyomsSolution
     public partial class frm_Main : Form
     {
         List<Vertex> vs = new List<Vertex>();
+        List<Line> ch = new List<Line>();
 
         public frm_Main()
         {
@@ -31,6 +32,9 @@ namespace ArtyomsSolution
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
+            if (vs.Count > 2)
+                foreach (Line l in ch)
+                    l.Draw(e.Graphics);
             foreach (Vertex v in vs)
                 v.DrawFigure(e.Graphics);
         }
@@ -39,19 +43,20 @@ namespace ArtyomsSolution
         {
             foreach (Vertex v in vs)
                 v.IsMoving = false;
+
+            calculate_ch();
+            delete_inside();
+
+            Invalidate();
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                int len = vs.Count;
-                for (int i = 0; i < len; i++)
+                for (int i = 0; i < vs.Count; i++)
                     if (vs[i].Check(e.X, e.Y))
-                    {
                         vs.RemoveAt(i--);
-                        len--;
-                    }
             }
 
             if (e.Button == MouseButtons.Left)
@@ -62,7 +67,7 @@ namespace ArtyomsSolution
                     if (v.Check(e.X, e.Y))
                     {
                         v.IsMoving = true;
-                        v.DeltaMouse = new Point(e.X - v.SETX, e.Y - v.SETY);
+                        v.DeltaMouse = new Point(e.X - v.X, e.Y - v.Y);
                         flag = true;
                     }
                 }
@@ -95,9 +100,11 @@ namespace ArtyomsSolution
                 foreach (Vertex v in vs)
                     if (v.IsMoving)
                     {
-                        v.SETX = e.X - v.DeltaMouse.X;
-                        v.SETY = e.Y - v.DeltaMouse.Y;
+                        v.X = e.X - v.DeltaMouse.X;
+                        v.Y = e.Y - v.DeltaMouse.Y;
                     }
+
+                calculate_ch();
                 Invalidate();
             }
         }
@@ -105,6 +112,67 @@ namespace ArtyomsSolution
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void chooseColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog cd = new ColorDialog();
+            cd.ShowDialog();
+            chooseColorToolStripMenuItem.BackColor = cd.Color;
+        }
+
+        private void calculate_ch()
+        {
+            ch = new List<Line>();
+            if (vs.Count < 3)
+                return;
+            for (int i = 0; i < vs.Count - 1; i++)
+            {
+                for (int j = i + 1; j < vs.Count; j++)
+                {
+                    bool first = true;
+                    bool val = true;
+                    bool flag = true;
+                    for (int k = 0; k < vs.Count; k++)
+                    {
+                        if (k == i || k == j)
+                            continue;
+                        bool v = Service.point_on_vector(vs[i].Location, vs[j].Location, vs[k].Location);
+                        if (first)
+                        {
+                            val = v;
+                            first = false;
+                            continue;
+                        }
+                        if (v != val)
+                        {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag)
+                        ch.Add(new Line(vs[i], vs[j]));
+                }
+            }
+        }
+        private void delete_inside()
+        {
+            if (vs.Count < 3)
+                return;
+
+            List<Vertex> delList = new List<Vertex>(vs);
+            foreach (Line l in ch)
+            {
+                if (vs.Contains(l.V1))
+                    delList.Remove(l.V1);
+                if (vs.Contains(l.V2))
+                    delList.Remove(l.V2);
+            }
+            for (; delList.Count > 0;)
+            {
+                vs.Remove(delList[0]);
+                delList.RemoveAt(0);
+            }
         }
     }
 }
