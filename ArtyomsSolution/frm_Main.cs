@@ -15,6 +15,7 @@ namespace ArtyomsSolution
     {
         List<Vertex> vs = new List<Vertex>();
         List<Line> ch = new List<Line>();
+        int net_step = 1;
 
         public frm_Main()
         {
@@ -24,10 +25,9 @@ namespace ArtyomsSolution
         private void Form1_Load(object sender, EventArgs e)
         {
             toolStripComboBox1.Items.Clear();
-            toolStripComboBox1.Items.Add("Circle");
-            toolStripComboBox1.Items.Add("Square");
-            toolStripComboBox1.Items.Add("Triangle");
+            toolStripComboBox1.Items.AddRange(new string[] { "Circle", "Square", "Triangle" });
             toolStripComboBox1.SelectedIndex = 0;
+            toolStripComboBox2.SelectedIndex = 0;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -102,6 +102,8 @@ namespace ArtyomsSolution
                     {
                         v.X = e.X - v.DeltaMouse.X;
                         v.Y = e.Y - v.DeltaMouse.Y;
+                        v.X = (v.X / net_step) * net_step;
+                        v.Y = (v.Y / net_step) * net_step;
                     }
 
                 calculate_ch();
@@ -114,13 +116,6 @@ namespace ArtyomsSolution
             this.Close();
         }
 
-        private void chooseColorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ColorDialog cd = new ColorDialog();
-            cd.ShowDialog();
-            chooseColorToolStripMenuItem.BackColor = cd.Color;
-        }
-
         private void calculate_ch()
         {
             ch = new List<Line>();
@@ -131,13 +126,14 @@ namespace ArtyomsSolution
                 for (int j = i + 1; j < vs.Count; j++)
                 {
                     bool first = true;
-                    bool val = true;
+                    int val = 0;
                     bool flag = true;
                     for (int k = 0; k < vs.Count; k++)
                     {
                         if (k == i || k == j)
                             continue;
-                        bool v = Service.point_on_vector(vs[i].Location, vs[j].Location, vs[k].Location);
+                        int v = Service.point_on_vector(vs[i].Location, vs[j].Location, vs[k].Location);
+                        if (v == 0) continue;
                         if (first)
                         {
                             val = v;
@@ -173,6 +169,12 @@ namespace ArtyomsSolution
                 vs.Remove(delList[0]);
                 delList.RemoveAt(0);
             }
+        }
+
+        private void toolStripComboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            net_step = int.Parse(toolStripComboBox2.Text);
+            toolStripComboBox2.Text = net_step.ToString();
         }
     }
 }

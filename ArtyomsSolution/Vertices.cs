@@ -10,32 +10,6 @@ using System.Windows.Forms;
 
 namespace ArtyomsSolution
 {
-    public static class Service
-    {
-        public static double dist(double x1, double y1, double x2, double y2)
-        {
-            return Math.Sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-        }
-        public static double dist(Point p1, Point p2)
-        {
-            return dist(p1.X, p1.Y, p2.X, p2.Y);
-        }
-
-        public static double square_triangle(double a, double b, double c)
-        {
-            double p = (a + b + c) / 2;
-            return Math.Sqrt(p * (p - a) * (p - b) * (p - c));
-        }
-
-        public static bool point_on_vector(double x0, double y0, double x1, double y1, double x, double y)
-        {
-            return x * (y1 - y0) + y * (x0 - x1) + x1 * y0 - x0 * y1 > 0;
-        }
-        public static bool point_on_vector(Point v0, Point v1, Point p)
-        {
-            return point_on_vector(v0.X, v0.Y, v1.X, v1.Y, p.X, p.Y);
-        }
-    }
     public abstract class Vertex
     {
         static protected Color col;
@@ -66,6 +40,11 @@ namespace ArtyomsSolution
 
         public abstract void DrawFigure(Graphics g);
         abstract public bool Check(int x, int y);
+
+        public override string ToString()
+        {
+            return Location.ToString();
+        }
     }
 
     public class Circle : Vertex
@@ -117,7 +96,7 @@ namespace ArtyomsSolution
         {
             Point p = new Point(x, y);
 
-            bool sign = Service.point_on_vector(P1, P2, p);
+            int sign = Service.point_on_vector(P1, P2, p);
             if (Service.point_on_vector(P2, P3, p) != sign || Service.point_on_vector(P3, P1, p) != sign)
                 return false;
             return true;
