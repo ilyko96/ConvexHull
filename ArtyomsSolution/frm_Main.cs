@@ -133,7 +133,7 @@ namespace ArtyomsSolution
                         if (k == i || k == j)
                             continue;
                         int v = Service.point_on_vector(vs[i].Location, vs[j].Location, vs[k].Location);
-                        if (v == 0) continue;
+                        if (v == 0) break;
                         if (first)
                         {
                             val = v;
