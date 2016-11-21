@@ -8,6 +8,7 @@ namespace ArtyomsSolution
         public static Color Color;
         public Vertex V1 { get; set; }
         public Vertex V2 { get; set; }
+        public Point DeltaMouse { get; set; }
 
         public double Length
         {

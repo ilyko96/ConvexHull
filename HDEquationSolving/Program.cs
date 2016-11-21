@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HDEquationSolving
@@ -31,37 +28,13 @@ namespace HDEquationSolving
                 if (i < d.Length)
                     d[i] = rnd.Next(-5, 6);
             }
-            D = new int[] { 1, -1, -3, -1 };
-            d = new int[] { 1, -2, -1 };
+            //D = new int[] { 1, -1, -3, -1 };
+            //d = new int[] { 1, -2, -1 };
 
             double[] ans = new double[D.Length - d.Length + 1];
             double[] curD = new double[d.Length];
             for (int i = 0; i < curD.Length; i++)
                 curD[i] = D[i];
-
-
-            //ans[0] = (double)curD[0] / d[0];
-            //for (int i = 1; i < d.Length; i++)
-            //{
-            //    curD[i - 1] = (double)curD[i] - (d[i] * ans[0]);
-            //}
-            //curD[d.Length - 1] = D[d.Length - 1 + 1];
-
-
-            //ans[1] = (double)curD[0] / d[0];
-            //for (int i = 1; i < d.Length; i++)
-            //{
-            //    curD[i - 1] = (double)curD[i] - (d[i] * ans[1]);
-            //}
-            //curD[d.Length - 1] = D[d.Length - 1 + 2];
-
-
-            //ans[2] = (double)curD[0] / d[0];
-            //for (int i = 1; i < d.Length; i++)
-            //{
-            //    curD[i - 1] = (double)curD[i] - (d[i] * ans[2]);
-            //}
-            //curD[d.Length - 1] = D[d.Length - 1 + 3];
 
             for (int j = 0; j <= D.Length - d.Length; j++)
             {

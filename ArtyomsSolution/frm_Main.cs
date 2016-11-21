@@ -16,6 +16,7 @@ namespace ArtyomsSolution
         List<Vertex> vs = new List<Vertex>();
         List<Line> ch = new List<Line>();
         int net_step = 1;
+        bool isMovingHull = false;
 
         public frm_Main()
         {
@@ -73,24 +74,66 @@ namespace ArtyomsSolution
                 }
                 if (!flag)
                 {
-                    switch (toolStripComboBox1.SelectedIndex)
+                    if (isInHull(e.X, e.Y))
                     {
-                        case 0:
-                            vs.Add(new Circle(e.X, e.Y));
-                            vs[vs.Count - 1].IsMoving = true;
-                            break;
-                        case 1:
-                            vs.Add(new Square(e.X, e.Y));
-                            vs[vs.Count - 1].IsMoving = true;
-                            break;
-                        case 2:
-                            vs.Add(new Triangle(e.X, e.Y));
-                            vs[vs.Count - 1].IsMoving = true;
-                            break;
+                        foreach (Vertex v in vs)
+                        {
+                            v.DeltaMouse = new Point(e.X - v.X, e.Y - v.Y);
+                            v.IsMoving = true;
+                        }
                     }
+                    else
+                        switch (toolStripComboBox1.SelectedIndex)
+                        {
+                            case 0:
+                                vs.Add(new Circle(e.X, e.Y));
+                                vs[vs.Count - 1].IsMoving = true;
+                                break;
+                            case 1:
+                                vs.Add(new Square(e.X, e.Y));
+                                vs[vs.Count - 1].IsMoving = true;
+                                break;
+                            case 2:
+                                vs.Add(new Triangle(e.X, e.Y));
+                                vs[vs.Count - 1].IsMoving = true;
+                                break;
+                        }
                 }
             }
             Invalidate();
+        }
+        private bool isInHull(int x, int y)
+        {
+            if (vs.Count < 3)
+                return false;
+            Point p = new Point(x, y);
+            for (int j = 0; j < vs.Count - 1; j++)
+            {
+                bool first = true;
+                int val = 0;
+                bool flag = true;
+                for (int k = 0; k < vs.Count; k++)
+                {
+                    if (k == j)
+                        continue;
+                    int v = Service.point_on_vector(p, vs[j].Location, vs[k].Location);
+                    if (v == 0) break;
+                    if (first)
+                    {
+                        val = v;
+                        first = false;
+                        continue;
+                    }
+                    if (v != val)
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag)
+                    return false;
+            }
+            return true;
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
