@@ -13,21 +13,21 @@ namespace HDEquationSolving
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
-            run();
+            Application.Run(new Form1());
+            //run();
         }
 
-        static void run()
+        static void run(double[] D, double[] d)
         {
             Random rnd = new Random();
-            int[] D = new int[7],
-                    d = new int[4];
-            for (int i = 0; i < D.Length; i++)
-            {
-                D[i] = rnd.NextDouble() > 0.4 ? rnd.Next(-5, 6) : 0;
-                if (i < d.Length)
-                    d[i] = rnd.Next(-5, 6);
-            }
+            //int[] D = new int[7],
+            //        d = new int[4];
+            //for (int i = 0; i < D.Length; i++)
+            //{
+            //    D[i] = rnd.NextDouble() > 0.4 ? rnd.Next(-5, 6) : 0;
+            //    if (i < d.Length)
+            //        d[i] = rnd.Next(-5, 6);
+            //}
             //D = new int[] { 1, -1, -3, -1 };
             //d = new int[] { 1, -2, -1 };
 
