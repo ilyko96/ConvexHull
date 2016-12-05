@@ -34,8 +34,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Name = "Polynomial";
-            this.Size = new System.Drawing.Size(212, 57);
+            this.Size = new System.Drawing.Size(210, 55);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Polynomial_Paint);
             this.ResumeLayout(false);
 

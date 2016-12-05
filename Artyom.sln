@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvexHull", "ArtyomsSoluti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDEquationSolving", "HDEquationSolving\HDEquationSolving.csproj", "{551C532C-6924-423F-B130-B6403086AAF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delegates", "Delegates\Delegates.csproj", "{38FE2466-01F3-4E85-B3A1-3BAA9B11F169}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{551C532C-6924-423F-B130-B6403086AAF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{551C532C-6924-423F-B130-B6403086AAF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{551C532C-6924-423F-B130-B6403086AAF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38FE2466-01F3-4E85-B3A1-3BAA9B11F169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38FE2466-01F3-4E85-B3A1-3BAA9B11F169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38FE2466-01F3-4E85-B3A1-3BAA9B11F169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38FE2466-01F3-4E85-B3A1-3BAA9B11F169}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
